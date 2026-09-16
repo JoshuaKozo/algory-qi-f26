@@ -70,3 +70,4 @@ else:
     print(f"{R}Fix what failed above before Homework 2.{OFF}")
     print(f"{D}Come to office hours rather than losing an evening to an install problem.{OFF}\n")
 sys.exit(0 if ok else 1)
+
