@@ -43,5 +43,19 @@ print("SPY Annualized Volatility:", round(spy_av, 2))
 #step 8 rebase and plot
 
 goog_rebased = ((goog_df["Close"]["GOOG"] / goog_first_close) *100)
-spy_rebased = ((spy_df["Close"]["GOOG"] / spy_first_close) *100)
+spy_rebased = ((spy_df["Close"]["SPY"] / spy_first_close) *100)
 
+plt.plot(goog_rebased, label = "GOOG")
+plt.plot(spy_rebased, label = "SPY")
+plt.xlabel("Date")
+plt.ylabel("Rebased Price (100)")
+plt.title("GOOG vs. SPY - Rebased Performance")
+plt.legend()
+plt.show()
+
+# step 9 find biggest daily move
+biggest_move_date = goog_dailyreturn.abs().idxmax()
+biggest_move_size = goog_dailyreturn[biggest_move_date]
+
+print("Biggest single-day move date:", biggest_move_date)
+print("Size of move:", round(biggest_move_size, 4))
