@@ -1,5 +1,6 @@
 # importing data, dropping empty rows, then printing desired columns
 import yfinance as yf
+import matplotlib.pyplot as plt
 ticker = "GOOG"
 goog_df = yf.download(ticker, start = "2025-09-15" , end = "2026-09-15")
 spy_df = yf.download("SPY", start = "2025-09-15" , end = "2026-09-15")
@@ -22,19 +23,25 @@ print("Last day:", spy_df.index[-1])
 goog_last_close = goog_df["Close"]["GOOG"].iloc[-1]
 goog_first_close = goog_df["Close"]["GOOG"].iloc[0]
 goog_year_return = (goog_last_close/goog_first_close) - 1
-goog_dailyreturn = goog_df["Close"]["GOOG"].pct_change()
+goog_dailyreturn = goog_df["Close"]["GOOG"].pct_change().dropna()
 goog_av = goog_dailyreturn.std() * (252 ** 0.5)
 
-print("SPY Last Close:", round(goog_last_close, 2))
-print("SPY Year Return:", round(goog_year_return, 2))
-print("SPY Annualized Volatility:", round(goog_av, 2))
+print("GOOG Last Close:", round(goog_last_close, 2))
+print("GOOG Year Return:", round(goog_year_return, 2))
+print("GOOG Annualized Volatility:", round(goog_av, 2))
 
 spy_last_close = spy_df["Close"]["SPY"].iloc[-1]
 spy_first_close = spy_df["Close"]["SPY"].iloc[0]
 spy_year_return = (spy_last_close/spy_first_close) - 1
-spy_dailyreturn = spy_df["Close"]["SPY"].pct_change()
+spy_dailyreturn = spy_df["Close"]["SPY"].pct_change().dropna()
 spy_av = spy_dailyreturn.std() * (252 ** 0.5)
 
 print("SPY Last Close:", round(spy_last_close, 2))
 print("SPY Year Return:", round(spy_year_return, 2))
 print("SPY Annualized Volatility:", round(spy_av, 2))
+
+#step 8 rebase and plot
+
+goog_rebased = ((goog_df["Close"]["GOOG"] / goog_first_close) *100)
+spy_rebased = ((spy_df["Close"]["GOOG"] / spy_first_close) *100)
+
